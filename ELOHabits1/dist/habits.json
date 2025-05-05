@@ -1,0 +1,11 @@
+{
+    "workout": {
+        "params": {
+            "pushups": 5.0,
+            "situps": 5.0,
+            "bike km": 20.0
+        },
+        "rating": 1200,
+        "k_factor": 20
+    }
+}
