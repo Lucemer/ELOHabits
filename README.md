@@ -1,4 +1,7 @@
 # ELOHabits
+![AlbedoBase_XL_Create_a_modern_app_icon_showing_a_gold_trophy_w_1](https://github.com/user-attachments/assets/c63d98f1-5381-49ef-b47b-dfe8b03de807)
+
+
 A program that allows users to develop habits by competing in personal proximal development.
 Habit Game Tracker is a gamified habit-building desktop app. You define your own habits and their performance parameters (e.g., for WorkingOut: nr. of pushups, squats, kilometers biked, etc.). 
 
