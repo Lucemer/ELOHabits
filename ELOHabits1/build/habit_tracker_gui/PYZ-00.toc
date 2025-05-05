@@ -1,4 +1,4 @@
-('D:\\Code\\Python\\HabitsELOv1\\build\\habit_tracker_gui\\PYZ-00.pyz',
+('D:\\Code\\Python\\ELOHabits1\\build\\habit_tracker_gui\\PYZ-00.pyz',
  [('_compat_pickle',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\_compat_pickle.py',
@@ -179,7 +179,7 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\gzip.py',
    'PYMODULE'),
-  ('habit_model', 'D:\\Code\\Python\\HabitsELOv1\\habit_model.py', 'PYMODULE'),
+  ('habit_model', 'D:\\Code\\Python\\ELOHabits1\\habit_model.py', 'PYMODULE'),
   ('hashlib',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\\Lib\\hashlib.py',

@@ -6,7 +6,64 @@ import json
 from collections import deque
 
 class Habit:
-    def __init__(self, name, params, initial_rating=1200, window_size=30, k_factor=20):
+    def __init__(self, name, parameters, weights, difficulty='Normal'):
+        self.name = name
+        self.parameters = parameters  # List of parameter names
+        self.weights = weights  # Dict: {parameter_name: weight}
+        self.difficulty = difficulty
+        self.history_file = f"{name}_history.csv"
+        self.elo = 1000  # Default ELO
+        self.load_elo()
+
+    def load_elo(self):
+        if os.path.exists(self.history_file):
+            with open(self.history_file, 'r') as f:
+                lines = f.readlines()
+                if len(lines) > 1:
+                    last_line = lines[-1].strip().split(',')
+                    self.elo = float(last_line[-1])
+
+    def save_session(self, user_score, adversary_score, result):
+        if not os.path.exists(self.history_file):
+            with open(self.history_file, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['User Score', 'Adversary Score', 'Result', 'New ELO'])
+
+        with open(self.history_file, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([user_score, adversary_score, result, self.elo])
+
+    def calculate_score(self, performance):
+        return sum(performance[param] * self.weights.get(param, 1) for param in self.parameters)
+
+    def generate_adversary_score(self):
+        recent_scores = []
+        if os.path.exists(self.history_file):
+            with open(self.history_file, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    try:
+                        recent_scores.append(float(row['User Score']))
+                    except:
+                        pass
+        avg = sum(recent_scores[-5:]) / min(len(recent_scores[-5:]), 5) if recent_scores else 10
+
+        if self.difficulty == 'Easy':
+            return random.uniform(0.7, 0.9) * avg
+        elif self.difficulty == 'Hard':
+            return random.uniform(1.1, 1.3) * avg
+        return random.uniform(0.9, 1.1) * avg
+
+    def update_elo(self, user_score, adversary_score):
+        result = 1 if user_score > adversary_score else 0 if user_score < adversary_score else 0.5
+        expected_score = 1 / (1 + 10 ** ((adversary_score - user_score) / 400))
+        k = 32
+        self.elo += k * (result - expected_score)
+        self.elo = round(self.elo, 2)
+        self.save_session(user_score, adversary_score, result)
+        return result
+
+    def __init__(self, name, params, initial_rating=500, window_size=30, k_factor=20):
         self.name = name
         self.params = params
         self.rating = initial_rating
@@ -84,7 +141,7 @@ class HabitManager:
         self.load_habits()
 
     def create_habit(self, name, params):
-        self.habits[name] = Habit(name, params)
+        self.habits[name] = Habit(name, params, initial_rating=500, k_factor=20)
         self.save_habits()
 
     def delete_habit(self, name):
@@ -123,6 +180,6 @@ class HabitManager:
                     self.habits[name] = Habit(
                         name=name,
                         params=data['params'],
-                        initial_rating=data.get('rating', 1200),
+                        initial_rating=data.get('rating', 500),
                         k_factor=data.get('k_factor', 20)
                     )

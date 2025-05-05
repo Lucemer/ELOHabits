@@ -1,11 +1,17 @@
 {
-    "workout": {
+    "Basic Workout": {
         "params": {
-            "pushups": 5.0,
-            "situps": 5.0,
-            "bike km": 20.0
+            "pu": 5.0,
+            "squat": 5.0
         },
-        "rating": 1200,
+        "rating": 1200.0213119911953,
+        "k_factor": 20
+    },
+    "teste": {
+        "params": {
+            "123": 2.0
+        },
+        "rating": 500,
         "k_factor": 20
     }
 }
